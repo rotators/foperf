@@ -144,9 +144,9 @@
                 }
                 else
                 {
-                    Log("  " + snippetNames[s] + ": " +
-                    rScore[s] +
-                    " (" + (rScore[s] * 100 / bestScore) + "%)");
+                    uint perc = (rScore[s] * 100 / bestScore);
+                    Log("  " + snippetNames[s] + ": " +  rScore[s] +
+                    ((perc < 98) ? (" (" + perc + "%)") : " (BEST)"));
                 }
             }
             Log("");
