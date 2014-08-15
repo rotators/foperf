@@ -62,9 +62,11 @@ results in a friendly manner).
 Accuracy
 --------
 
-For snippets which take very little time to execute (under 1ms) the test is not
+For snippets which take very little time to execute (under 2ms) the test is not
 very accurate, because within the macros there is a hidden loop code that is
-also measured. For example if you compare following snippet functions:
+also measured. This generally benefits slower snippets by making them look less
+slow compared to the fastest snippet. For example if you compare following
+snippet functions:
 
 ```
 string test3()
