@@ -1,0 +1,44 @@
+/**
+ * Raw string operations vs Unicode
+ * Run with: ASCompiler unicode.fos -run foperf::main
+ */
+ 
+#define FOPERF_TESTCASE @rawFirst, @rawLast, @uniFirst, @uniLast
+
+#include "../foperf.fos"
+
+string rawFirst()
+{
+    string s = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    FOPERF_START;
+    s.rawSet(0, '!');
+    FOPERF_STOP;
+    return "Replace first raw character";
+}
+
+string rawLast()
+{
+    string s = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    FOPERF_START;
+    s.rawSet(99, '!');
+    FOPERF_STOP;
+    return "Replace last raw character";
+}
+
+string uniFirst()
+{
+    string s = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    FOPERF_START;
+    s[0] = "!";
+    FOPERF_STOP;
+    return "Replace first Unicode character";
+}
+
+string uniLast()
+{
+    string s = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    FOPERF_START;
+    s[99] = "!";
+    FOPERF_STOP;
+    return "Replace last Unicode character";
+}

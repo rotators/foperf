@@ -1,8 +1,11 @@
-// Run with: ASCompiler example.fos -run foperf::main
+/**
+ * string::toFloat vs StrToFloat
+ * Run with: ASCompiler tofloat.fos -run foperf::main
+ */
 
 #define FOPERF_TESTCASE @test1, @test2
 
-#include "foperf.fos"
+#include "../foperf.fos"
 
 string test1()
 {
