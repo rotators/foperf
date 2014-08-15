@@ -1,0 +1,157 @@
+#ifndef FOPERF_TESTCASE
+
+    #define FOPERF_START
+    #define FOPERF_STOP
+
+    namespace foperf
+    {
+        void main()
+        {
+            Log("Error: FOPERF_TESTCASE not defined.");
+            Log("Include foperf.fos file *after* defining FOPERF_TESTCASE.");
+        }
+    }
+
+#endif
+#ifdef FOPERF_TESTCASE
+
+    #ifndef FOPERF_CYCLES
+        #define FOPERF_CYCLES 5
+    #endif
+
+    #ifndef FOPERF_TIME
+        #define FOPERF_TIME 1000
+    #endif
+
+    #define FOPERF_START \
+        foperf::tStart = GetTick(); \
+        for (foperf::cbi = 0; foperf::cbi < foperf::cbn; foperf::cbi++) \
+        {
+    
+    #define FOPERF_STOP \
+        } \
+        foperf::tStop = GetTick(); \
+        if (foperf::cb) { \
+            if (foperf::tStop - foperf::tStart < 2) foperf::cbn++; \
+            else foperf::cb = false; \
+        }
+
+    funcdef string FOPERF_SNIPPET();
+
+    namespace foperf
+    {
+        uint tStart = 0;
+        uint tStop = 0;
+        
+        // variables for callibration
+        bool cb = false;
+        uint cbi = 0;
+        uint cbn = 1;
+
+        void main()
+        {
+            array<FOPERF_SNIPPET@> snippets = { FOPERF_TESTCASE };
+            array<string> snippetNames(snippets.length());
+            
+            // Get the snippet names
+            //
+            for (uint s = 0; s < snippets.length(); s++)
+            {
+                snippetNames[s] = snippets[s]();
+            }
+            
+            // Callibrate the test
+            //
+            Log("\nCallibrating...");
+            for (uint s = 0; s < snippets.length(); s++)
+            {
+                cb = true;
+                while (cb)
+                {
+                    snippets[s]();
+                }
+            }
+
+            Log("\nTesting " + snippets.length() + " functions.");
+
+            uint secs = FOPERF_CYCLES * snippets.length() * FOPERF_TIME / 1000;
+            if (secs > 1)
+            {
+                Log("The test should take around " + secs + " seconds.");
+            }
+
+
+            // Prepare arrays with results
+            //
+            array<uint> rMin(snippets.length());
+            array<uint> rMax(snippets.length());
+            array<uint> rSum(snippets.length());
+            array<uint> rTime(snippets.length());
+            array<uint> rScore(snippets.length());
+
+            // Test loop
+            //
+            Log("  Progress: 0%");
+            for (uint c = 0; c < FOPERF_CYCLES; c++)
+            {
+                for (uint s = 0; s < snippets.length(); s++)
+                {
+                    uint result = 0;
+                    uint tSample = 0;
+                    uint tTotal = GetTick();
+                    do
+                    {
+                        
+                        snippets[s]();
+                        result += 1;
+                        tSample += (tStop - tStart);
+                    } while (
+                        (tSample < FOPERF_TIME) &&
+                        ((GetTick() - tTotal) < (FOPERF_TIME))
+                    );
+                    if (result < rMin[s] || rMin[s] == 0) rMin[s] = result;
+                    if (result > rMax[s] || rMax[s] == 0) rMax[s] = result;
+                    rSum[s] += result;
+                    rTime[s] += tSample;
+                }
+                Log("  Progress: " + ((c + 1) * 100 / FOPERF_CYCLES) + "%");
+            }
+            
+            // Compute scores
+            //
+            uint bestScore = 0;
+            uint bestSnippet = 0;
+            for (uint s = 0; s < snippets.length(); s++)
+            {
+                rScore[s] = rSum[s] * 1000 / rTime[s];
+                if (rScore[s] > bestScore)
+                {
+                    bestScore = rScore[s];
+                    bestSnippet = s;
+                }
+            }
+            
+            // Show results
+            //
+            Log("\nResult:");
+            for (uint s = 0; s < snippets.length(); s++)
+            {
+                if (s == bestSnippet)
+                {
+                    Log("  " + snippetNames[s] + ": " +
+                    rScore[s] +
+                    " (BEST)");
+                }
+                else
+                {
+                    Log("  " + snippetNames[s] + ": " +
+                    rScore[s] +
+                    " (" + (rScore[s] * 100 / bestScore) + "%)");
+                }
+            }
+            Log("");
+
+        }
+    }
+
+#endif

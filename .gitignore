@@ -1,0 +1,4 @@
+# Ignore executables, batch files ans shell scripts
+*.exe
+*.bat
+*.sh

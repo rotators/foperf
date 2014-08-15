@@ -1,0 +1,102 @@
+// Run with ASCompiler example.fos -run foperf::main
+
+#define FOPERF_TESTCASE @func1, @func2, @func3
+
+#include "foperf.fos"
+
+string func1()
+{
+    string s = "3.1415";
+    float f = 0;
+    FOPERF_START
+        f = s.toFloat();
+    FOPERF_STOP
+    return "toFloat";
+}
+
+string func2()
+{
+    string s = "3.1415";
+    float f = 0;
+    FOPERF_START;
+        StrToFloat(s, f);
+    FOPERF_STOP;
+    return "StrToFloat";
+}
+
+string func3()
+{
+    string s = "3.1415";
+    float f = 0;
+    FOPERF_START;
+        JovStrToFloat(s, f);
+    FOPERF_STOP;
+    return "JovStrToFloat";
+}
+
+
+
+bool JovStrToFloat(string@ str, float& f)
+{
+    int length = str.rawLength();
+    int position = length- 1;
+    int count = 0;
+    int symbol = 0;
+    int value = 0;
+    int exponent = 0;
+
+    while (position >= 0)
+    {
+        symbol = str.rawGet(position);
+
+        switch (symbol)
+        {
+            case 43:  // + sign
+            {
+                break;
+            }
+            case 45:  // - sign
+            {
+                value = -value;
+                break;
+            }
+            case 46:  // . decimal point
+            {
+                exponent += -count;
+                break;
+            }
+            case 48:  // 0
+            case 49:  // 1
+            case 50:  // 2
+            case 51:  // 3
+            case 52:  // 4
+            case 53:  // 5
+            case 54:  // 6
+            case 55:  // 7
+            case 56:  // 8
+            case 57:  // 9
+            {
+                value += (symbol - 48) * int(pow(10, count));
+                count += 1;
+                break;
+            }
+            case 69:  // E
+            case 101: // e
+            {
+                exponent = value;
+                value = 0;
+                count = 0;
+                break;
+            }
+            default:
+            {
+                return false;
+            }
+        }
+        position -= 1;
+    }
+    f = float(value) * float(pow(10, exponent));
+    return true;
+}
+
+
