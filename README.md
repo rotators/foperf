@@ -90,5 +90,5 @@ You may be suprised to see that the second snippet is only 5% slower, and the
 logic tells us that it should be around 50%. That's because the hidden loop code
 distorts the results for very small snippets. However, the result is still
 useful - it tells which code is the fastest. For code that takes more than 2ms
-to execute, the distortion of the result should be neglible.
+to execute, the distortion of the result should be negligible.
 
