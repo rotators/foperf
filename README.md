@@ -6,6 +6,9 @@ FOnline script allowing you to compare performance of snippets of code.
 How to use
 ----------
 
+Check example.fos in the repository.
+Below I explain step by step how to create your own:
+
 1. First define FOPERF_TESTCASE - a list of pointers to snippet functions:
 
    ```#define FOPERF_TESTCASE @test1, @test2```
