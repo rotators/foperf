@@ -1,6 +1,6 @@
 /**
  * Testing various methods of incrementing a variable
- * Run with: ASCompiler silly.fos -run foperf::main
+ * Run with: ASCompiler increment.fos -run foperf::main
  */
  
 #define FOPERF_TESTCASE @silly1, @silly2, @silly3, @silly4
