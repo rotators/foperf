@@ -1,0 +1,45 @@
+/**
+ * Testing various methods of incrementing a variable
+ * Run with: ASCompiler silly.fos -run foperf::main
+ */
+ 
+#define FOPERF_TESTCASE @silly1, @silly2, @silly3, @silly4
+
+#include "../foperf.fos"
+
+string silly1()
+{
+    int i = 0;
+    FOPERF_START;
+    i++;
+    FOPERF_STOP;
+    return "i++ ";
+}
+
+string silly2()
+{
+    int i = 0;
+    FOPERF_START;
+    ++i;
+    FOPERF_STOP;
+    return "++i ";
+}
+
+
+string silly3()
+{
+    int i = 0;
+    FOPERF_START;
+    i += 1;
+    FOPERF_STOP;
+    return "i+=1 ";
+}
+
+string silly4()
+{
+    int i = 0;
+    FOPERF_START;
+    i = i + 1;
+    FOPERF_STOP;
+    return "i=i+1 ";
+}
