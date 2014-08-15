@@ -1,1 +1,2 @@
-ASCompiler %1.fos -run foperf::main
+ASCompiler %1 -run foperf::main
+pause
