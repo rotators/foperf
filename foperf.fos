@@ -62,7 +62,7 @@
             
             // Callibrate the test
             //
-            Log("\nCallibrating...");
+            Log("\nCalibrating...");
             for (uint s = 0; s < snippets.length(); s++)
             {
                 cb = true;
