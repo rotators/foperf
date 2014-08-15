@@ -47,9 +47,9 @@ return a string with the name of the snippet (the name can be anything, it's
 used to display the results in a friendly manner).
 
 4. Use ASCompiler with `-run foperf::main` option to run the test.
-   For example let's say the testcase script is saved as "example.fos":
+   For example let's say the testcase script is saved as "tofloat.fos":
    
-   ```ASCompiler example.fos -run foperf::main```
+   ```ASCompiler tofloat.fos -run foperf::main```
    
    Here is the result part of the script output:
    
