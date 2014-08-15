@@ -61,10 +61,8 @@ used to display the results in a friendly manner).
 Accuracy
 --------
 
-I don't make any claims about accuracy. Especially that I'm not good with math
-or statistics. The script is supposed to tell you which code is faster, and as
-long as the speed difference is more than 1%, it should tell the truth most of
-the time.
+The script is supposed to tell you which code is faster, and as long as the speed
+difference is more than 2-3%, it should tell the truth most of the time.
 
 For snippets which take very little time to execute (under 2ms) the test is not
 very accurate, because within the macros there is a hidden loop code that is
