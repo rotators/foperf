@@ -37,7 +37,7 @@ How to use
       return "StrToFloat";
    }
    ```
-Inisde the snippet functions, place the tested code between the macros
+Inside the snippet functions, place the tested code between the macros
 FOPERF_START and FOPERF_STOP. You should use the macros only once per snippet
 function. If you need some preparation code, put it before FOPERF_START. Finally
 return a string with the name of the snippet (the name can be anything, it's
@@ -60,6 +60,11 @@ used to display the results in a friendly manner).
  
 Accuracy
 --------
+
+I don't make any claims about accuracy. Especially that I'm not good with math
+or statistics. The script is supposed to tell you which code is faster, and as
+long as the speed difference is more than 1%, it should tell the truth most of
+the time.
 
 For snippets which take very little time to execute (under 2ms) the test is not
 very accurate, because within the macros there is a hidden loop code that is
@@ -86,7 +91,7 @@ string test4()
 }
 ```
 
-You may be suprised to see that the second snippet is only 5% slower, and the
+You may be surprised to see that the second snippet is only 5% slower, and the
 logic tells us that it should be around 50%. That's because the hidden loop code
 distorts the results for very small snippets. However, the result is still
 useful - it tells which code is the fastest. For code that takes more than 2ms
